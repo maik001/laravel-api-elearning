@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
+use App\Models\Traits\UuidTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,13 +11,17 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, UuidTrait;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+    public $incrementing = false;
+
+    protected $keyType = 'uuid';
+
     protected $fillable = [
         'name',
         'email',
@@ -43,10 +47,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // para utilizar o uuid é preciso sempre quando estivar criando um usuario setar o tipo uuid
-    public static function booted() {
-        static::creating(function ($model) {
-            $model->id = (String) Str::uuid();
-        });
-    }
 }
