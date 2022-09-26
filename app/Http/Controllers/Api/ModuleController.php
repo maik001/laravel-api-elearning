@@ -20,4 +20,8 @@ class ModuleController extends Controller
 
         return ModuleResource::collection($modules);
     }
+
+    public function show($id) {
+        return new ModuleResource($this->repository->getModule($id));
+    }
 }

@@ -14,7 +14,7 @@ class ModuleRepository {
         return $this->entity->where('course_id', $courseId)->get();
     }
 
-    public function getCourse(string $id) {
+    public function getModule(string $id) {
         return $this->entity->findOrFail($id);
     }
 }
