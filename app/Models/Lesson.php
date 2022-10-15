@@ -12,8 +12,6 @@ class Lesson extends Model
 
     public $incrementing = false;
 
-    public $timestamps = false;
-
     protected $keyType = 'uuid';
 
     protected $fillable = ['name', 'url', 'description', 'video', 'image'];
@@ -21,5 +19,9 @@ class Lesson extends Model
 
     public function modules() {
         return $this->hasOne(Module::class);
+    }
+
+    public function supports() {
+        return $this->hasMany(Support::class);
     }
 }

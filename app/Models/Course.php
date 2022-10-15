@@ -12,8 +12,6 @@ class Course extends Model
 
     public $incrementing = false;
 
-    public $timestamps = false;
-
     protected $keyType = 'uuid';
 
     protected $fillable = [
