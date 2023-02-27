@@ -31,6 +31,33 @@ class SupportRepository{
                     ->get();
     }
 
+    public function createNewSupport(array $data): Support {
+        $support = $this->getUserAuth()
+                    ->supports()
+                    ->create([
+                        'lesson_id' => $data['lesson'],
+                        'description' => $data['description'],
+                        'status' => $data['status'],
+                    ]);
+
+        return $support;
+    }
+
+    public function createReplyToSupportId(string $supportId, array $data) {
+        $user = $this->getUserAuth();
+        $reply = $this->getSupport($supportId)
+                    ->replies()
+                    ->create([
+                                'description' => $data['description'],
+                                'user_id' => $user->id
+                    ]);
+        return $reply;
+    }
+
+    private function getSupport(string $id) {
+        return $this->entity->findOrFail($id);
+    }
+
     private function getUserAuth(): User {
         // return auth()->user();
         return User::first();
